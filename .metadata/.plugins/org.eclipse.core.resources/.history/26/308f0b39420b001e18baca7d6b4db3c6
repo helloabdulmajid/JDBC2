@@ -1,0 +1,88 @@
+package com.jdbcpackages;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+
+public class Launch {
+
+	public static void main(String[] args) throws Exception {
+	
+		Connection con = createConnection();
+		createDatabase(con);	
+	    createTable(con);
+	    
+	    insertData(con);
+	
+		
+	}
+
+	private static void insertData(Connection con) {
+		//data insert 
+	    try
+		{
+			//String sql1="insert into students(roll,name,phone) values(1,Abdul Majid,9887654321)";  //oracle
+			String sql1="insert into advjava1.students(roll,name,phone) values(1,'Abdul Majid',98876543)";  //mysql
+				Statement st1=con.createStatement();
+				int row=st1.executeUpdate(sql1);
+				System.out.println(row + "rows Updated");
+			}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+	}
+
+	private static void createDatabase(Connection con) {
+		//create database
+		try {
+			String sql="create database advjava1";  //mysql
+			Statement st=con.createStatement();
+			boolean execute=st.execute(sql);
+			System.out.println(execute);
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+	}
+
+	private static void createTable(Connection con) {
+		//create table
+
+
+		try
+		{
+			String sql1="create table advjava1.students(roll int primary key,name varchar(50),phone int(12))";  //mysql
+			//	String sql1="create table students(roll int primary key,name varchar(50),phone int(12))";  //oracle ->databse name not requid 
+				Statement st1=con.createStatement();
+				boolean execute1=st1.execute(sql1);
+				System.out.println(execute1);
+			}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+	}
+
+	private static Connection createConnection() throws ClassNotFoundException, SQLException {
+		//url
+		String url ="jdbc:mysql://localhost:3306";    //mysql
+		//String url ="jdbc:oracle:thin@localhost:1521:xe";    //oracle
+		
+		//username
+		String username="root";
+		//password
+		String password="";
+		
+		//driver loading
+		Class.forName("com.mysql.cj.jdbc.Driver");   //mysql driver loading
+		// Class.forName("oracle.jdbc.driver.OracleDriver");    //oracle driver loading
+		
+		//Factory Design Pattern
+		Connection con=DriverManager.getConnection(url,username,password);
+		return con;
+	}
+
+}

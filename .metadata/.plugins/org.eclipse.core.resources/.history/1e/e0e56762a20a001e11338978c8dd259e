@@ -1,0 +1,29 @@
+package com.jdbcpackages;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class Launch {
+
+	public static void main(String[] args) throws Exception {
+	
+		//url
+		String url ="jdbc:mysql://localhost:3306";    //mysql
+		//String url ="jdbc:oracle:thin@localhost:1521:xe";    //oracle
+		
+		//username
+		String username="root";
+		//password
+		String password="";
+		
+		//driver loading
+		Class.forName("com.mysql.cj.jdbc.Driver");   //mysql driver loading
+		// Class.forName("oracle.jdbc.driver.OracleDriver");    //oracle driver loading
+		
+		Connection con=DriverManager.getConnection(url,username,password);
+		
+		System.out.println(con);
+		
+	}
+
+}
